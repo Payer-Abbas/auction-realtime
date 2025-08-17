@@ -18,10 +18,17 @@ export default {
   },
   test: {
     ...common,
-    url: process.env.DATABASE_URL
+    url: process.env.DATABASE_URL,
   },
   production: {
     ...common,
-    url: process.env.DATABASE_URL
-  }
+    url: process.env.DATABASE_URL,
+    protocol: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false, // required for Render
+      },
+    },
+  },
 };
