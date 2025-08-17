@@ -18,16 +18,19 @@ app.use(cors({ origin: process.env.FRONTEND_URL || "*" }));
 app.use(morgan("dev"));
 app.use(express.json());
 
-// ✅ Helmet CSP to allow fonts, styles, and sockets
+// ✅ Apply helmet with custom CSP
 app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https:"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https:"],
-      fontSrc: ["'self'", "https:", "data:"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", "https:", "wss:"],
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: false,
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https:"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https:"],
+        fontSrc: ["'self'", "https:", "data:"],
+        imgSrc: ["'self'", "data:", "https:"],
+        connectSrc: ["'self'", "https:", "wss:"],
+      },
     },
   })
 );
@@ -43,9 +46,9 @@ if (process.env.NODE_ENV === "production") {
 
   app.use(express.static(clientBuildPath));
 
-  // For any unknown route, send back index.html (React handles routing)
+  // Catch-all route for React Router
   app.get("*", (req, res) => {
-    res.sendFile(path.join(clientBuildPath, "../../client/dist/index.html"));
+    res.sendFile(path.join(clientBuildPath, "index.html"));
   });
 }
 
