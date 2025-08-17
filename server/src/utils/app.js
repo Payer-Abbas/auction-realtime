@@ -27,7 +27,7 @@ app.use(
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", "'unsafe-inline'", "https:"],
         styleSrc: ["'self'", "'unsafe-inline'", "https:"],
-        fontSrc: ["'self'", "https:", "data:"],
+        fontSrc: ["'self'", "data:","https:"],
         imgSrc: ["'self'", "data:", "https:"],
         connectSrc: ["'self'", "https:", "wss:"],
       },
