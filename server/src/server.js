@@ -1,4 +1,5 @@
-import io from './sockets/index.js';
+// src/server.js
+import initSocketServer from "./sockets/index.js";
 
-// Boot the server (HTTP+Socket are started inside sockets/index.js)
-io();
+// Boot the server (HTTP + Socket.IO are started inside sockets/index.js)
+initSocketServer();

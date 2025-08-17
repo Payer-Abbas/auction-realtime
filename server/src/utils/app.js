@@ -1,6 +1,8 @@
+// src/utils/app.js
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import helmet from "helmet";
 import "dotenv/config";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -15,6 +17,20 @@ const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL || "*" }));
 app.use(morgan("dev"));
 app.use(express.json());
+
+// ✅ Helmet CSP to allow fonts, styles, and sockets
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https:"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https:"],
+      fontSrc: ["'self'", "https:", "data:"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https:", "wss:"],
+    },
+  })
+);
 
 // API routes
 app.use("/api", router);
