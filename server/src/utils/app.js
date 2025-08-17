@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === "production") {
 
   // For any unknown route, send back index.html (React handles routing)
   app.get("*", (req, res) => {
-    res.sendFile(path.join(clientBuildPath, "index.html"));
+    res.sendFile(path.join(clientBuildPath, "../../client/dist/index.html"));
   });
 }
 
